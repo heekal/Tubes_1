@@ -72,7 +72,7 @@ class Admin(Aplikasi):
     def __init__(self, username, password, jabatan):
         super().__init__(username, password, jabatan)
 
-    def main_menu(self):
+    def main_program(self):
         Admin.admin_menu(self)
         opsi = int(input('Pilihan Kamu: '))
 
@@ -90,6 +90,20 @@ class Admin(Aplikasi):
 
     def edit_data(self, tujuan):
         username_cari = input('Masukkan Username Yang Ingin Di cari : ')
-        password_cari = input('Masukkan Password Baru : ')
-        if username_cari in tujuan['username'] and password_cari in tujuan['password']:
-            
+        password_cari = input('Masukkan Password Yang Ingin Di cari : ') 
+        for index, username_tersimpan in enumerate(tujuan['username']):
+            if username_cari == username_tersimpan:
+                print('Data Ditemukan !')
+                tujuan['username'][index] = input('Masukkan Username Baru : ')
+                tujuan['password'][index] = input('Masukkan Password Baru : ')
+                print('Data Berhasil Ditambahkan !')
+            else:
+                print('Data Tidak Ditemukan !')
+
+class Sumberdaya(Aplikasi):
+    def __init__(self, username, password, jabatan):
+        super().__init__(username, password, jabatan)
+
+    def main_program(self):
+        Sumberdaya.sdm_menu()
+        opsi == int(input('Masukkan'))
