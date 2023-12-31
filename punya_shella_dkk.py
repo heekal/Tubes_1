@@ -15,7 +15,7 @@ direktur = {
 }
 
 pegawai = {
-    'nip' : [110322300, 1103223001, 1003223000],
+    'nip' : [1103223000, 1103223001, 1003223000, 1103223004],
     'nama' : ['haikal', 'luna', 'winatha', 'glenn'],
     'gaji' : {
         'pokok' : [1000, 1000, 250, 250],
@@ -47,16 +47,15 @@ class Aplikasi:
     def sdm_menu(self):
         print('Silakan Pilih Opsi Di Bawah Ini: ')
         print('1. Tambah/Edit Data') # ini bisa edit data pegawai atau gaji
-        print('2. Lihat Semua Pegawai')
-        print('3. Lihat Pegawai Tertentu') # ini bisa dari bulan atau divisi
-        print('4. Lihat Divisi') # tampilin Standar Gaji
-        print('5. Lihat Pejabat Kantor')
-        print('6. Hitung Total Gaji Yang Perlu Dibayar')
-        print('7. Keluar')
+        print('2. Lihat Pegawai') # ini bisa dari bulan atau divisi tapi udah terurut NIP
+        print('3. Lihat Divisi') # sekalian tampilin Standar Gaji
+        print('4. Lihat Pejabat Kantor')
+        print('5. Hitung Total Gaji Yang Perlu Dibayar')
+        print('6. Keluar')
 
     def direktur_menu(self):
         print('Silakan Pilih Opsi Di Bawah Ini: ')
-        print('1. Lihat Semua Pegawai')
+        print('1. Lihat Pegawai')
         print('2. Lihat Pegawai Tertentu') # ini bisa dari bulan atau divisi
         print('3. Lihat Divisi') # tampilin Standar Gaji
         print('4. Lihat Pejabat Kantor')
@@ -106,4 +105,52 @@ class Sumberdaya(Aplikasi):
 
     def main_program(self):
         Sumberdaya.sdm_menu()
-        opsi == int(input('Masukkan'))
+        opsi = int(input('Masukkan pilihan kamu'))
+
+        if opsi == 1:
+            self.tampil_data()
+            data = input('Pilih Data Yang Ingin Diganti : ') # isinya bisa gaji   
+            if data == 'gaji':
+                gaji_lama = input('Masukkan Nominal Yang Ingin Diganti : ')
+                gaji_baru = input('Masukkan Nominal Gaji Yang Baru : ')
+                self.edit_gaji(data, gaji_lama, gaji_baru)
+            else:
+                ganti = input('Pilih Pegawai Yang Ingin Diganti : ')
+                self.edit_data(ganti, data)         
+
+    def tampil_data(self):
+        self.urut('nip')
+        print('Data Pegawai: ') # ini buat lihat semua pegawai
+        print("NIP\tNama\tGaji Pokok\tGaji Jam\tJabatan\tDivisi") 
+        print("-------\t-------\t-------\t-------\t-------\t-------")
+        for i in range(len(pegawai['nip'])):
+            print(f"{pegawai['nip'][i]}\t{pegawai['nama'][i]}\t{pegawai['gaji']['pokok'][i]}\t{pegawai['gaji']['jam'][i]}\t{pegawai['jabatan'][i]}\t{pegawai['divisi'][i]}")
+    
+    def edit_data(self, tujuan, nama):
+        if nama in pegawai['nama']: # udah urut NIP
+            pegawai['nama'][nama] = input(f'Masukkan {nama} Yang Baru : ')
+            print('Data Berhasil Ditambahkan !')
+        else:
+            print('Data Tidak Ditemukan')
+
+    def edit_gaji(self, gaji, gaji_lama, gaji_baru):
+        if gaji in pegawai['gaji']:
+            for i, item in enumerate(pegawai['gaji'][gaji]):
+                if item == gaji_lama:
+                    pegawai['gaji'][gaji][i] = gaji_baru
+        else:
+            print('Data Tidak Ditemukan !')
+
+    def urut(self, tipe):
+        if tipe == 'nip':
+            simpan_index = []
+            sort_nip = []
+            copy_nip = pegawai[tipe]
+            for i in range(len(pegawai[tipe])):
+                simpan_index.append(i)
+            copy_nip.sorted(True)
+            for j, item in enumerate(pegawai[tipe]):
+                if item == copy_nip[j]:
+                    sort_nip.append(j)
+            for k,l in sort_nip, range(len(pegawai[tipe])):
+                pegawai[tipe].append()
